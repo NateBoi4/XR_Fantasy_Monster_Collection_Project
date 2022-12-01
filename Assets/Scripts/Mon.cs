@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-enum Status
+public enum Status
 {
     INVALID = -1,
     NONE = 0,
@@ -33,4 +33,13 @@ public class Mon : MonoBehaviour
     [SerializeField] private int currentHP;
     [SerializeField] private Status currentStatus;
     public stats stats;
+
+    public void Attack(string attackName)
+    {
+        int damage;
+        int acc;
+        Typing type;
+        int uses;
+        
+    }
 }

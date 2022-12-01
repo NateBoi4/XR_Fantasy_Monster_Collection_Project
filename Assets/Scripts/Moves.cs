@@ -1,8 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
+using System.Text.RegularExpressions;
+using System;
 
-enum Typing
+public enum Typing
 {
     UNKNOWN = -1,
     NEUTRAL = 0,
@@ -14,12 +17,14 @@ enum Typing
 
 public static class Moves
 {
+    private static string attackData;
+
     public static string[] types =
     {
         "Neutral",
         "Fire",
         "Water",
-        "Wing",
+        "Wind",
         "Earth"
     };
 
@@ -50,93 +55,44 @@ public static class Moves
         return types;
     }
 
-    #region Damage
-    public struct flameBreath
+    public struct attackValues
     {
-        static int damageVal = 50;
-        static int acc = 100;
-        static Typing type = Typing.FIRE;
-        static int uses = 5;
+        public string attackName;
+        public int damageVal;
+        public int acc;
+        public Typing type;
+        public int uses;
     }
-    public struct splash
+
+    public static List<attackValues> attackList = new List<attackValues>();
+
+    private static void ReadAttackData()
     {
-        static int damageVal = 20;
-        static int acc = 100;
-        static Typing type = Typing.WATER;
-        static int uses = 10;
+        string path = Application.dataPath + "/Resources/attackData.txt";
+        StreamReader reader = new StreamReader(path);
+        attackData = reader.ReadToEnd();
+        reader.Close();
     }
-    public struct lightningStrike
+
+    public static void PopulateAttackList()
     {
-        static int damageVal = 100;
-        static int acc = 50;
-        static Typing type = Typing.WIND;
-        static int uses = 3;
+        ReadAttackData();
+        string[] lines = attackData.Split("\n"[0]);
+        foreach(string line in lines)
+        {
+            Debug.Log(line);
+        }
+        for(int i = 0; i < lines.Length; i++)
+        {
+            attackValues av = new attackValues();
+            string[] data = lines[i].Split(' ');
+            av.attackName = data[0];
+            av.damageVal = Int32.Parse(data[1]);
+            av.acc = Int32.Parse(data[2]);
+            av.type = (Typing)Enum.Parse(typeof(Typing), data[3]);
+            av.uses = Int32.Parse(data[4]);
+            attackList.Add(av);
+        }
+        Debug.Log("List contains " + attackList.Count + " entries.");
     }
-    public struct earthQuake
-    {
-        static int damageVal = 80;
-        static int acc = 80;
-        static Typing type = Typing.EARTH;
-        static int uses = 4;
-    }
-    public struct iceStorm
-    {
-        static int damageVal = 70;
-        static int acc = 100;
-        static Typing type = Typing.WATER;
-        static int uses = 1;
-    }
-    public struct tsunami
-    {
-        static int damageVal = 120;
-        static int acc = 30;
-        static Typing type = Typing.WATER;
-        static int uses = 2;
-    }
-    #endregion
-    //Not Implemented
-    #region Effect
-    public struct fullCounter
-    {
-        static int damageVal = 50;
-        static int acc = 100;
-        static Typing type = Typing.FIRE;
-        static int uses = 5;
-    }
-    public struct guardUp
-    {
-        static int damageVal = 50;
-        static int acc = 100;
-        static Typing type = Typing.FIRE;
-        static int uses = 5;
-    }
-    public struct falseStrike
-    {
-        static int damageVal = 50;
-        static int acc = 100;
-        static Typing type = Typing.FIRE;
-        static int uses = 5;
-    }
-    public struct flashBang
-    {
-        static int damageVal = 50;
-        static int acc = 100;
-        static Typing type = Typing.FIRE;
-        static int uses = 5;
-    }
-    public struct gutPunch
-    {
-        static int damageVal = 50;
-        static int acc = 100;
-        static Typing type = Typing.FIRE;
-        static int uses = 5;
-    }
-    public struct twinStep
-    {
-        static int damageVal = 50;
-        static int acc = 100;
-        static Typing type = Typing.FIRE;
-        static int uses = 5;
-    }
-    #endregion
 }

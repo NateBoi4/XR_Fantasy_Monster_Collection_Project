@@ -1,0 +1,4 @@
+FlameBreath 50 100 FIRE 5
+Splash 20 100 WATER 10
+LightningStrike 70 70 WIND 7
+Earthquake 100 50 EARTH 3
