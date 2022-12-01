@@ -57,6 +57,7 @@ public static class Moves
 
     public struct attackValues
     {
+        public int attackId;
         public string attackName;
         public int damageVal;
         public int acc;
@@ -86,11 +87,12 @@ public static class Moves
         {
             attackValues av = new attackValues();
             string[] data = lines[i].Split(' ');
-            av.attackName = data[0];
-            av.damageVal = Int32.Parse(data[1]);
-            av.acc = Int32.Parse(data[2]);
-            av.type = (Typing)Enum.Parse(typeof(Typing), data[3]);
-            av.uses = Int32.Parse(data[4]);
+            av.attackId = Int32.Parse(data[0]);
+            av.attackName = data[1];
+            av.damageVal = Int32.Parse(data[2]);
+            av.acc = Int32.Parse(data[3]);
+            av.type = (Typing)Enum.Parse(typeof(Typing), data[4]);
+            av.uses = Int32.Parse(data[5]);
             attackList.Add(av);
         }
         Debug.Log("List contains " + attackList.Count + " entries.");

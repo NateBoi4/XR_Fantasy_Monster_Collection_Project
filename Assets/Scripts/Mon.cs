@@ -34,12 +34,23 @@ public class Mon : MonoBehaviour
     [SerializeField] private Status currentStatus;
     public stats stats;
 
-    public void Attack(string attackName)
+    public IEnumerator Attack(int attackId)
     {
         int damage;
         int acc;
         Typing type;
         int uses;
-        
+        foreach(Moves.attackValues av in Moves.attackList)
+        {
+            if(av.attackId == attackId)
+            {
+                damage = av.damageVal;
+                acc = av.acc;
+                type = av.type;
+                uses = av.uses;
+                break;
+            }
+        }
+        yield return null;
     }
 }
